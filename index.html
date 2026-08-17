@@ -1,0 +1,197 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Robust Brachiation on a Life-Sized Dual-Arm Robot Using Waypoint-Guided Reinforcement Learning</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.7.0/font/bootstrap-icons.css" rel="stylesheet">
+    <link rel="stylesheet" href="assets/css/main.css">
+
+    <meta name="description" content="A waypoint-guided reinforcement learning framework for robust brachiation and zero-shot Sim-to-Real transfer on a life-sized dual-arm robot.">
+    <link rel="canonical" href="https://ayumuiwa.github.io/wgrl-brachiation/">
+    <meta property="og:url" content="https://ayumuiwa.github.io/wgrl-brachiation/" />
+    <meta property="og:type" content="article" />
+    <meta property="og:site_name" content="Robust Brachiation Using WGRL" />
+    <meta property="og:title" content="Robust Brachiation on a Life-Sized Dual-Arm Robot Using Waypoint-Guided Reinforcement Learning" />
+    <meta property="og:description" content="Waypoint-guided reinforcement learning for robust brachiation and zero-shot Sim-to-Real transfer." />
+    <meta property="og:image" content="https://ayumuiwa.github.io/wgrl-brachiation/assets/img/og-image.jpg" />
+    <meta property="og:image:secure_url" content="https://ayumuiwa.github.io/wgrl-brachiation/assets/img/og-image.jpg" />
+    <meta property="og:image:type" content="image/jpeg" />
+    <meta property="og:image:width" content="1420" />
+    <meta property="og:image:height" content="800" />
+    <meta property="og:image:alt" content="A life-sized dual-arm robot performing brachiation" />
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content="Robust Brachiation Using WGRL" />
+    <meta name="twitter:description" content="Robust brachiation and failure recovery on a life-sized dual-arm robot." />
+    <meta name="twitter:image" content="https://ayumuiwa.github.io/wgrl-brachiation/assets/img/og-image.jpg" />
+  </head>
+  <body>
+    <div class="container-fluid">
+      <div class="row">
+        <div class="col-lg-8 offset-lg-2 col-md-12">
+
+          <div class="text-center">
+            <h1 class="mt-5"><b>Robust Brachiation on a Life-Sized Dual-Arm Robot</b></h1>
+            <h2 class="mt-3"><b>Using Waypoint-Guided Reinforcement Learning</b></h2>
+            <h4 class="mt-4 conf"><b>IEEE/RSJ International Conference on Intelligent Robots and Systems (IROS) 2026</b></h4>
+            <ul class="list-inline mt-4 author-list">
+              <!-- TODO: Replace # with each author's official profile URL when available. -->
+              <li class="list-inline-item author-item"><a class="author-link" href="https://github.com/AyumuIwa" target="_blank">Ayumu Iwata</a></li>
+              <li class="list-inline-item ml-4 author-item"><a class="author-link" href="https://haraduka.github.io" target="_blank">Kento Kawaharazuka</a></li>
+              <li class="list-inline-item ml-4 author-item"><a class="author-link" href="#">Keita Yoneda</a></li>
+              <li class="list-inline-item ml-4 author-item"><a class="author-link" href="#">Takahiro Hattori</a></li>
+              <li class="list-inline-item ml-4 author-item"><a class="author-link" href="#">Kei Okada</a></li>
+              <li class="mt-2">The University of Tokyo</li>
+            </ul>
+            <ul class="list-inline mt-4">
+              <li class="list-inline-item">
+                <a href="assets/paper.pdf" target="_blank" class="btn btn-dark rounded-button">
+                  <i class="bi-file-pdf button-icon"></i> Paper PDF
+                </a>
+              </li>
+              <li class="list-inline-item">
+                <!-- TODO: Replace # with the arXiv URL after publication. -->
+                <a href="#" class="btn btn-dark rounded-button disabled" aria-disabled="true">
+                  <img class="button-icon" src="assets/css/arxiv-logomark-small@2x.png" alt="arXiv" style="width:20px;height:20px;margin-right:5px;"> arXiv (TODO)
+                </a>
+              </li>
+              <li class="list-inline-item">
+                <!-- TODO: Replace # with the official IROS paper URL. -->
+                <a href="#" class="btn btn-dark rounded-button disabled" aria-disabled="true">
+                  <i class="bi-link-45deg button-icon"></i> IROS (TODO)
+                </a>
+              </li>
+            </ul>
+          </div>
+
+          <div align="center" class="row mt-4 mb-4">
+            <div class="col-lg-8 offset-lg-2">
+              <img src="assets/img/brachiation-hero.jpg" class="img-fluid" alt="Life-sized dual-arm robot traversing monkey bars">
+            </div>
+          </div>
+
+          <div class="col-lg-10 offset-lg-1"><hr class="mt-4 mb-4"></div>
+          <div class="col-lg-10 offset-lg-1">
+            <h4>Abstract</h4>
+            <p>
+              Brachiation enables locomotion through environments without footholds, but requires coordinated whole-body movement and precise timing for bar grasping and release.
+              This work presents Waypoint-Guided Reinforcement Learning (WGRL), a framework for realizing robust brachiation on a life-sized dual-arm robot.
+              When full-body reference motions for imitation learning are unavailable, WGRL sparsely specifies waypoints for the end-effector trajectory while allowing reinforcement learning to generate the whole-body motion.
+              By combining waypoint guidance with task-success and mechanical-energy rewards, and training in an environment designed for Sim-to-Real transfer, the method achieves both forward progression and motion stability.
+              Sim-to-Sim evaluations under varied monkey-bar geometries and zero-shot hardware experiments demonstrate robust brachiation, including recovery from failed grasps.
+            </p>
+          </div>
+
+          <div class="col-lg-10 offset-lg-1"><hr class="mt-4 mb-4"></div>
+          <div class="col-lg-10 offset-lg-1">
+            <h4>Motivation</h4>
+            <p>
+              Reinforcement learning has enabled robust legged locomotion, but locomotion without footholds remains challenging.
+              Brachiation requires discontinuous contact changes, coordinated whole-body motion, and precise grasp-and-release timing.
+              Existing model-based approaches can depend strongly on accurate dynamics, while high-quality reference motions suitable for robot-specific hooks are difficult to obtain.
+              WGRL addresses these challenges by guiding only the task-critical end-effector path with sparse waypoints instead of requiring a complete reference motion.
+            </p>
+            <div align="center" class="row mt-4 mb-4">
+              <div class="col-lg-8 offset-lg-2">
+                <img src="assets/img/robot-design.png" class="img-fluid" alt="Mechanical design of the life-sized dual-arm robot and hook-shaped end-effector">
+              </div>
+            </div>
+          </div>
+
+          <div class="col-lg-10 offset-lg-1"><hr class="mt-4 mb-4"></div>
+          <div class="col-lg-10 offset-lg-1">
+            <h4>Waypoint-Guided Reinforcement Learning</h4>
+            <p>
+              WGRL guides the reaching hand through five task-space waypoints: detaching from the current bar, passing beneath the bars, moving forward, rising toward the target, and hooking from above.
+              Its reward combines a position term based on distance and approach direction, a progress term based on the decrease in normalized distance, and a success term that advances the target waypoint.
+              A curriculum gradually enlarges the waypoint thresholds as learning progresses, providing strong guidance early in training while allowing diverse final motions.
+            </p>
+            <div align="center" class="row mt-4 mb-4">
+              <div class="col-lg-10 offset-lg-1">
+                <img src="assets/img/wgrl-waypoints.png" class="img-fluid" alt="Waypoint design for inducing a nonlinear hooking trajectory">
+              </div>
+            </div>
+          </div>
+
+          <div class="col-lg-10 offset-lg-1"><hr class="mt-4 mb-4"></div>
+          <div class="col-lg-10 offset-lg-1">
+            <h4>Training</h4>
+            <p>
+              The policy is trained with PPO in 4096 parallel Legged Gym environments.
+              The actor uses only observations available on hardware and outputs target joint angles at 50 Hz, while the critic receives privileged simulation information.
+              Observation noise and domain randomization are applied to friction, link masses, centers of mass, and bar geometry.
+              Initial training emphasizes WGRL to acquire the motion, followed by refinement in which bar-reaching success promotes forward motion and mechanical-energy regulation promotes stable suspension.
+            </p>
+            <div align="center" class="row mt-4 mb-4">
+              <div class="col-lg-10 offset-lg-1">
+                <img src="assets/img/reward-ablation.png" class="img-fluid" alt="Learning curves from the reward component ablation study">
+              </div>
+            </div>
+          </div>
+
+          <div class="col-lg-10 offset-lg-1"><hr class="mt-4 mb-4"></div>
+          <div class="col-lg-10 offset-lg-1">
+            <h4>Sim-to-Sim Results</h4>
+            <p>
+              In MuJoCo, the learned policy traversed more than 30 bars in every trial under the nominal 400 mm spacing.
+              It also maintained forward progression in unseen environments with vertical and yaw perturbations, a 5-degree inclined up-and-down course, and a circular course.
+              Reaching success was 93.3% on the inclined course and 91% on the circular course.
+              When a hook initially missed, the robot often recovered its balance, generated another swing, and retried the grasp.
+            </p>
+            <div align="center" class="row mt-4 mb-4">
+              <div class="col-lg-12">
+                <img src="assets/img/sim-to-sim.png" class="img-fluid" alt="Sim-to-Sim evaluation in rough, inclined, and circular monkey-bar environments">
+              </div>
+            </div>
+          </div>
+
+          <div class="col-lg-10 offset-lg-1"><hr class="mt-4 mb-4"></div>
+          <div class="col-lg-10 offset-lg-1">
+            <h4>Hardware Experiment</h4>
+            <p>
+              The simulation-trained policy was transferred to the life-sized robot without additional fine-tuning.
+              In a four-bar hardware course, the robot repeatedly released one hook, swung toward the next bar, grasped it, and stabilized in dual-hand support.
+              Even after hooking failures, an emergent recovery strategy increased the swing amplitude and enabled repeated grasping attempts without falling.
+            </p>
+            <div align="center" class="row mt-4 mb-4">
+              <div class="col-lg-12">
+                <img src="assets/img/hardware-sequence.png" class="img-fluid" alt="Zero-shot Sim-to-Real brachiation sequence on the hardware robot">
+              </div>
+            </div>
+            <div align="center" class="row mt-4 mb-4">
+              <div class="col-lg-8 offset-lg-2">
+                <img src="assets/img/failure-recovery.png" class="img-fluid" alt="Failure recovery sequence showing a failed hook, momentum building, and successful reattempt">
+              </div>
+            </div>
+          </div>
+
+          <div class="col-lg-10 offset-lg-1"><hr class="mt-4 mb-4"></div>
+          <div class="col-lg-10 offset-lg-1">
+            <h4 id="bibtex">BibTeX</h4>
+            <pre>
+@inproceedings{iwata2026robust,
+  title={{Robust Brachiation on a Life-Sized Dual-Arm Robot Using Waypoint-Guided Reinforcement Learning}},
+  author={Ayumu Iwata and Kento Kawaharazuka and Keita Yoneda and Takahiro Hattori and Kei Okada},
+  booktitle={IEEE/RSJ International Conference on Intelligent Robots and Systems (IROS)},
+  year={2026},
+}
+            </pre>
+          </div>
+
+          <div class="col-lg-10 offset-lg-1"><hr class="mt-4 mb-4"></div>
+          <div class="col-lg-10 offset-lg-1 mb-5">
+            <h4 id="contact">Contact</h4>
+            <p>
+              If you have any questions, please feel free to contact
+              <!-- TODO: Replace # and the email address with the preferred contact details. -->
+              <a href="#">Ayumu Iwata</a> (TODO: contact email).
+            </p>
+          </div>
+
+        </div>
+      </div>
+    </div>
+  </body>
+</html>
