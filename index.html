@@ -7,7 +7,7 @@
     <title>Robust Brachiation on a Life-Sized Dual-Arm Robot Using Waypoint-Guided Reinforcement Learning</title>
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.7.0/font/bootstrap-icons.css" rel="stylesheet">
-    <link rel="stylesheet" href="assets/css/main.css">
+    <link rel="stylesheet" href="assets/css/main.css?v=20260818-1">
 
     <meta name="description" content="A study proposing and demonstrating a learning-based framework centered on waypoint-guided reinforcement learning (WGRL) for robust real-world brachiation with a life-sized dual-arm robot.">
     <link rel="canonical" href="https://ayumuiwa.github.io/wgrl-brachiation/">
@@ -70,20 +70,24 @@
           </div>
 
           <div class="col-lg-10 offset-lg-1"><hr class="mt-4 mb-4"></div>
-          <div class="col-lg-10 offset-lg-1">
-            <h4>Abstract</h4>
+          <div class="col-lg-10 offset-lg-1 abstract-section">
+            <h4 class="section-title abstract-title">Abstract</h4>
             <p>
-              Brachiation enables locomotion through environments without footholds, but requires coordinated whole-body movement and precise timing for bar grasping and release.
-              This work presents Waypoint-Guided Reinforcement Learning (WGRL), a framework for realizing robust brachiation on a life-sized dual-arm robot.
-              When full-body reference motions for imitation learning are unavailable, WGRL sparsely specifies waypoints for the end-effector trajectory while allowing reinforcement learning to generate the whole-body motion.
-              By combining waypoint guidance with task-success and mechanical-energy rewards, and training in an environment designed for Sim-to-Real transfer, the method achieves both forward progression and motion stability.
-              Sim-to-Sim evaluations under varied monkey-bar geometries and zero-shot hardware experiments demonstrate robust brachiation, including recovery from failed grasps.
+              Brachiation is a form of locomotion in which primates move primarily using their arms, enabling traversal in environments without footholds.
+              However, this motion requires highly coordinated whole-body movement and precise timing control for bar grasping and release.
+              As a result, achieving robust behavior on life-sized robotic platforms remains challenging.
+              In this study, we present a reinforcement learning-based method to realize brachiation on a life-sized dual-arm robot.
+              The core of the proposed approach is Waypoint-Guided Reinforcement Learning (WGRL), a learning framework for inducing non-linear and complex motions.
+              For high-difficulty tasks where imitation learning data are unavailable, WGRL guides behavior acquisition by sparsely specifying waypoints for the end-effector trajectory, while whole-body motion is generated through reinforcement learning.
+              In addition, by integrating the waypoint-following guidance with rewards based on task success and mechanical energy, and training in an environment designed for Sim-to-Real transfer, the proposed method achieves both forward progression and motion stability.
+              The acquired behavior is evaluated through Sim-to-Sim experiments under monkey-bar environments with geometric variations and hardware experiments, confirming robust brachiation including failure recovery behavior.
+              This study provides effective learning design guidelines for realizing arm-based locomotion on life-sized robotic hardware and expanding the traversable workspace of robots.
             </p>
           </div>
 
           <div class="col-lg-10 offset-lg-1"><hr class="mt-4 mb-4"></div>
           <div class="col-lg-10 offset-lg-1">
-            <h4>Motivation</h4>
+            <h4 class="section-title">Motivation</h4>
             <p>
               Reinforcement learning has enabled robust legged locomotion, but locomotion without footholds remains challenging.
               Brachiation requires discontinuous contact changes, coordinated whole-body motion, and precise grasp-and-release timing.
@@ -99,7 +103,7 @@
 
           <div class="col-lg-10 offset-lg-1"><hr class="mt-4 mb-4"></div>
           <div class="col-lg-10 offset-lg-1">
-            <h4>Waypoint-Guided Reinforcement Learning</h4>
+            <h4 class="section-title">Waypoint-Guided Reinforcement Learning</h4>
             <p>
               WGRL guides the reaching hand through five task-space waypoints: detaching from the current bar, passing beneath the bars, moving forward, rising toward the target, and hooking from above.
               Its reward combines a position term based on distance and approach direction, a progress term based on the decrease in normalized distance, and a success term that advances the target waypoint.
@@ -114,7 +118,7 @@
 
           <div class="col-lg-10 offset-lg-1"><hr class="mt-4 mb-4"></div>
           <div class="col-lg-10 offset-lg-1">
-            <h4>Training</h4>
+            <h4 class="section-title">Training</h4>
             <p>
               The policy is trained with PPO in 4096 parallel Legged Gym environments.
               The actor uses only observations available on hardware and outputs target joint angles at 50 Hz, while the critic receives privileged simulation information.
@@ -130,7 +134,7 @@
 
           <div class="col-lg-10 offset-lg-1"><hr class="mt-4 mb-4"></div>
           <div class="col-lg-10 offset-lg-1">
-            <h4>Sim-to-Sim Results</h4>
+            <h4 class="section-title">Sim-to-Sim Results</h4>
             <p>
               In MuJoCo, the learned policy traversed more than 30 bars in every trial under the nominal 400 mm spacing.
               It also maintained forward progression in unseen environments with vertical and yaw perturbations, a 5-degree inclined up-and-down course, and a circular course.
@@ -146,7 +150,7 @@
 
           <div class="col-lg-10 offset-lg-1"><hr class="mt-4 mb-4"></div>
           <div class="col-lg-10 offset-lg-1">
-            <h4>Hardware Experiment</h4>
+            <h4 class="section-title">Hardware Experiment</h4>
             <p>
               The simulation-trained policy was transferred to the life-sized robot without additional fine-tuning.
               In a four-bar hardware course, the robot repeatedly released one hook, swung toward the next bar, grasped it, and stabilized in dual-hand support.
@@ -166,7 +170,7 @@
 
           <div class="col-lg-10 offset-lg-1"><hr class="mt-4 mb-4"></div>
           <div class="col-lg-10 offset-lg-1">
-            <h4 id="bibtex">BibTeX</h4>
+            <h4 id="bibtex" class="section-title">BibTeX</h4>
             <pre>
 @inproceedings{iwata2026robust,
   title={{Robust Brachiation on a Life-Sized Dual-Arm Robot Using Waypoint-Guided Reinforcement Learning}},
@@ -179,7 +183,7 @@
 
           <div class="col-lg-10 offset-lg-1"><hr class="mt-4 mb-4"></div>
           <div class="col-lg-10 offset-lg-1 mb-5">
-            <h4 id="contact">Contact</h4>
+            <h4 id="contact" class="section-title">Contact</h4>
             <p>
               If you have any questions, please feel free to contact
               <!-- TODO: Replace # and the email address with the preferred contact details. -->
