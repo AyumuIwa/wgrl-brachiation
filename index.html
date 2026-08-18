@@ -61,7 +61,7 @@
           </div>
 
           <div align="center" class="row mt-4 mb-4">
-            <div class="col-lg-8 offset-lg-2">
+            <div class="col-lg-12">
               <video class="img-fluid" controls autoplay muted playsinline preload="metadata">
                 <source src="assets/video/video1.mp4" type="video/mp4">
                 Your browser does not support the video tag.
@@ -87,16 +87,16 @@
 
           <div class="col-lg-10 offset-lg-1"><hr class="mt-4 mb-4"></div>
           <div class="col-lg-10 offset-lg-1">
-            <h4 class="section-title">Motivation</h4>
+            <h4 class="section-title">Life-Sized Dual-Arm Robot</h4>
             <p>
-              Reinforcement learning has enabled robust legged locomotion, but locomotion without footholds remains challenging.
-              Brachiation requires discontinuous contact changes, coordinated whole-body motion, and precise grasp-and-release timing.
-              Existing model-based approaches can depend strongly on accurate dynamics, while high-quality reference motions suitable for robot-specific hooks are difficult to obtain.
-              WGRL addresses these challenges by guiding only the task-critical end-effector path with sparse waypoints instead of requiring a complete reference motion.
+              We use a dual-arm robot modeled after the upper body of an adult human.
+              The robot is 1093 mm tall and weighs 19.6 kg.
+              Each arm has five degrees of freedom: shoulder roll, pitch, and yaw, elbow pitch, and wrist pitch.
+              The end-effectors are hook-shaped hands designed to catch the bars and securely suspend the robot during brachiation.
             </p>
             <div align="center" class="row mt-4 mb-4">
-              <div class="col-lg-8 offset-lg-2">
-                <img src="assets/img/robot-design.png" class="img-fluid" alt="Mechanical design of the life-sized dual-arm robot and hook-shaped end-effector">
+              <div class="col-lg-12">
+                <img src="assets/img/mech.jpg" class="img-fluid" alt="Mechanical design and hook-shaped end-effector of the life-sized dual-arm robot">
               </div>
             </div>
           </div>
@@ -105,65 +105,90 @@
           <div class="col-lg-10 offset-lg-1">
             <h4 class="section-title">Waypoint-Guided Reinforcement Learning</h4>
             <p>
-              WGRL guides the reaching hand through five task-space waypoints: detaching from the current bar, passing beneath the bars, moving forward, rising toward the target, and hooking from above.
-              Its reward combines a position term based on distance and approach direction, a progress term based on the decrease in normalized distance, and a success term that advances the target waypoint.
-              A curriculum gradually enlarges the waypoint thresholds as learning progresses, providing strong guidance early in training while allowing diverse final motions.
-            </p>
-            <div align="center" class="row mt-4 mb-4">
-              <div class="col-lg-10 offset-lg-1">
-                <img src="assets/img/wgrl-waypoints.png" class="img-fluid" alt="Waypoint design for inducing a nonlinear hooking trajectory">
-              </div>
-            </div>
-          </div>
-
-          <div class="col-lg-10 offset-lg-1"><hr class="mt-4 mb-4"></div>
-          <div class="col-lg-10 offset-lg-1">
-            <h4 class="section-title">Training</h4>
-            <p>
-              The policy is trained with PPO in 4096 parallel Legged Gym environments.
-              The actor uses only observations available on hardware and outputs target joint angles at 50 Hz, while the critic receives privileged simulation information.
-              Observation noise and domain randomization are applied to friction, link masses, centers of mass, and bar geometry.
-              Initial training emphasizes WGRL to acquire the motion, followed by refinement in which bar-reaching success promotes forward motion and mechanical-energy regulation promotes stable suspension.
-            </p>
-            <div align="center" class="row mt-4 mb-4">
-              <div class="col-lg-10 offset-lg-1">
-                <img src="assets/img/reward-ablation.png" class="img-fluid" alt="Learning curves from the reward component ablation study">
-              </div>
-            </div>
-          </div>
-
-          <div class="col-lg-10 offset-lg-1"><hr class="mt-4 mb-4"></div>
-          <div class="col-lg-10 offset-lg-1">
-            <h4 class="section-title">Sim-to-Sim Results</h4>
-            <p>
-              In MuJoCo, the learned policy traversed more than 30 bars in every trial under the nominal 400 mm spacing.
-              It also maintained forward progression in unseen environments with vertical and yaw perturbations, a 5-degree inclined up-and-down course, and a circular course.
-              Reaching success was 93.3% on the inclined course and 91% on the circular course.
-              When a hook initially missed, the robot often recovered its balance, generated another swing, and retried the grasp.
+              Waypoint-Guided Reinforcement Learning (WGRL) guides task-critical representative points through a sequence of waypoints while leaving whole-body motion generation to exploration through reinforcement learning.
+              For brachiation, seven waypoints are specified for the end-effector to guide its motion.
+              This design enables the acquisition of complex brachiation locomotion that combines dexterous end-effector motion with coordinated whole-body dynamics.
+              Furthermore, curriculum learning progressively relaxes the waypoint guidance, improving the robustness of the resulting behavior.
             </p>
             <div align="center" class="row mt-4 mb-4">
               <div class="col-lg-12">
-                <img src="assets/img/sim-to-sim.png" class="img-fluid" alt="Sim-to-Sim evaluation in rough, inclined, and circular monkey-bar environments">
+                <img src="assets/img/waypoints.jpg" class="img-fluid" alt="Waypoint design for inducing a nonlinear hooking trajectory">
+              </div>
+            </div>
+            <p>
+              WGRL is implemented using rewards that encourage the end-effector to follow the specified waypoints.
+              To optimize this reward design, we compared several definitions of the position reward <i>r</i><sub>pos</sub>, which evaluates the spatial relationship between the end-effector and its current target waypoint.
+              The results show that reward definitions considering not only the distance to the target but also the direction from which the end-effector approaches it achieve more stable learning and higher motion-acquisition performance.
+            </p>
+            <div align="center" class="row mt-4 mb-4">
+              <div class="col-lg-12">
+                <img src="assets/img/fields.jpg" class="img-fluid" alt="Reward field visualizations comparing distance-only, direction-only, and combined position reward definitions">
+              </div>
+            </div>
+            <div align="center" class="row mt-4 mb-4">
+              <div class="col-lg-12">
+                <img src="assets/img/comp2.jpg" class="img-fluid" alt="Comparison of position reward definitions based on target distance and approach direction">
+              </div>
+            </div>
+            <p>
+              In addition to the position reward <i>r</i><sub>pos</sub>, we define a progress reward <i>r</i><sub>prog</sub> based on the rate of approach to the target and a sparse success reward <i>r</i><sub>succ</sub> given when the target waypoint is reached.
+              We conducted an ablation study comparing different combinations of these three reward components.
+              The results show that <i>r</i><sub>succ</sub> is essential as an explicit incentive for waypoint traversal, but is insufficient on its own.
+              Combining all three reward terms yielded the best performance, enabling stable learning and successful acquisition of brachiation behavior.
+            </p>
+            <div align="center" class="row mt-4 mb-4">
+              <div class="col-lg-12">
+                <img src="assets/img/comp1.jpg" class="img-fluid" alt="Ablation study comparing combinations of position, progress, and success rewards">
               </div>
             </div>
           </div>
 
           <div class="col-lg-10 offset-lg-1"><hr class="mt-4 mb-4"></div>
           <div class="col-lg-10 offset-lg-1">
-            <h4 class="section-title">Hardware Experiment</h4>
+            <h4 class="section-title">Brachiation Reinforcement Learning Environment</h4>
             <p>
-              The simulation-trained policy was transferred to the life-sized robot without additional fine-tuning.
-              In a four-bar hardware course, the robot repeatedly released one hook, swung toward the next bar, grasped it, and stabilized in dual-hand support.
-              Even after hooking failures, an emergent recovery strategy increased the swing amplitude and enabled repeated grasping attempts without falling.
+              In addition to the waypoint-following rewards of WGRL, the overall reward function includes a forward-progression reward proportional to the number of bars reached from the start, a reward that suppresses excessive growth in mechanical energy, and penalties for falling and unstable motions.
+              To facilitate Sim-to-Real transfer, we further introduce domain randomization, randomization of the monkey-bar configuration, and action noise during training.
             </p>
             <div align="center" class="row mt-4 mb-4">
               <div class="col-lg-12">
-                <img src="assets/img/hardware-sequence.png" class="img-fluid" alt="Zero-shot Sim-to-Real brachiation sequence on the hardware robot">
+                <img src="assets/img/leggedgym.jpg" class="img-fluid" alt="Parallel reinforcement learning environments">
               </div>
             </div>
+          </div>
+
+          <div class="col-lg-10 offset-lg-1"><hr class="mt-4 mb-4"></div>
+          <div class="col-lg-10 offset-lg-1">
+            <h4 class="section-title">Sim-to-Sim Experiment</h4>
+            <p>
+              We applied the learned policy to a MuJoCo Sim-to-Sim environment.
+              In addition to a regularly aligned monkey-bar course, the robot achieved adaptive and stable brachiation on rough courses, as well as on previously unseen up-and-down and circular courses that were not included in the reinforcement learning environment.
+              We attribute this result to the ideal end-effector trajectory induced by WGRL, which makes a large wrapping motion around the bar and provides sufficient clearance for grasping, as well as to the improved robustness achieved through curriculum learning and domain randomization.
+            </p>
             <div align="center" class="row mt-4 mb-4">
-              <div class="col-lg-8 offset-lg-2">
-                <img src="assets/img/failure-recovery.png" class="img-fluid" alt="Failure recovery sequence showing a failed hook, momentum building, and successful reattempt">
+              <div class="col-lg-12">
+                <video class="img-fluid" controls autoplay muted playsinline preload="metadata">
+                  <source src="assets/video/sim-to-sim.mp4" type="video/mp4">
+                  Your browser does not support the video tag.
+                </video>
+              </div>
+            </div>
+          </div>
+
+          <div class="col-lg-10 offset-lg-1"><hr class="mt-4 mb-4"></div>
+          <div class="col-lg-10 offset-lg-1">
+            <h4 class="section-title">Sim-to-Real Experiment</h4>
+            <p>
+              In the Sim-to-Real experiment, the learned policy was transferred to the real robot in a zero-shot manner, achieving continuous brachiation across four bars.
+              Even when the robot failed to grasp a bar on its first attempt, it avoided falling, rebuilt its swing, and attempted to grasp the bar again.
+              We consider this failure-recovery behavior to be an emergent control strategy acquired through the learning environment, which combines rewards for forward progression with penalties for falling.
+            </p>
+            <div align="center" class="row mt-4 mb-4">
+              <div class="col-lg-12">
+                <video class="img-fluid" controls autoplay muted playsinline preload="metadata">
+                  <source src="assets/video/sim-to-real.mp4" type="video/mp4">
+                  Your browser does not support the video tag.
+                </video>
               </div>
             </div>
           </div>
